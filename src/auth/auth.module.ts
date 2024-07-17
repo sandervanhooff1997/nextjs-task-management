@@ -1,10 +1,11 @@
 import { Module } from '@nestjs/common';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { JwtModule } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
 import {
   getDataSourceToken,
   getRepositoryToken,
-  TypeOrmModule,
+  TypeOrmModule
 } from '@nestjs/typeorm';
 import { CommonModule } from 'src/common/common.module';
 import { DataSource } from 'typeorm';
@@ -16,12 +17,17 @@ import { userRepository } from './users.repository';
 
 @Module({
   imports: [
+    ConfigModule,
     PassportModule.register({ defaultStrategy: 'jwt' }),
-    JwtModule.register({
-      secret: 'topsecret',
-      signOptions: {
-        expiresIn: 3600,
-      },
+    JwtModule.registerAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: async (configService: ConfigService) => ({
+        secret: configService.get('JWT_SECRET'),
+        signOptions: {
+          expiresIn: 3600,
+        },
+      }),
     }),
     TypeOrmModule.forFeature([User]),
     CommonModule,
@@ -31,7 +37,7 @@ import { userRepository } from './users.repository';
     JwtStrategy, // provide it as a DI class
     {
       provide: getRepositoryToken(User),
-      inject: [getDataSourceToken()],
+      inject: [getDataSourceToken(), ConfigService],
       useFactory(datasource: DataSource) {
         return datasource.getRepository(User).extend(userRepository);
       },

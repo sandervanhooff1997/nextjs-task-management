@@ -16,15 +16,15 @@ import { TasksModule } from './tasks/tasks.module';
       inject: [ConfigService], // register ConfigService for DI
       // write a custom factory method returning a config object back to the TypeOrmModule
       useFactory: async (configService: ConfigService) => ({
-          type: 'postgres',
-          host: configService.get('DB_HOST'),
-          port: configService.get('DB_PORT'),
-          username: configService.get('DB_USERNAME'),
-          password: configService.get('DB_PASSWORD'),
-          database: configService.get('DB_DATABASE'),
-          autoLoadEntities: true, // finds entity files (*.entity.ts) and loads them for you
-          synchronize: true, // auto create tables based on entities (dont use in production)
-      })
+        type: 'postgres',
+        host: configService.get('DB_HOST'),
+        port: configService.get('DB_PORT'),
+        username: configService.get('DB_USERNAME'),
+        password: configService.get('DB_PASSWORD'),
+        database: configService.get('DB_DATABASE'),
+        autoLoadEntities: true, // finds entity files (*.entity.ts) and loads them for you
+        synchronize: true, // auto create tables based on entities (dont use in production)
+      }),
     }),
     LoggerModule.forRoot({
       pinoHttp: {
@@ -42,7 +42,7 @@ import { TasksModule } from './tasks/tasks.module';
     }),
     ConfigModule.forRoot({
       envFilePath: [`./env/.env.${process.env.STAGE}`],
-      validationSchema: configValidationSchema
+      validationSchema: configValidationSchema,
     }),
     TasksModule,
     AuthModule,
