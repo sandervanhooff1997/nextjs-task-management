@@ -5,7 +5,7 @@ import { PassportModule } from '@nestjs/passport';
 import {
   getDataSourceToken,
   getRepositoryToken,
-  TypeOrmModule
+  TypeOrmModule,
 } from '@nestjs/typeorm';
 import { CommonModule } from 'src/common/common.module';
 import { DataSource } from 'typeorm';

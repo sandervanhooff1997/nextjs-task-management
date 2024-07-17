@@ -11,7 +11,7 @@ async function bootstrap() {
   // setup nestjs to use the logger from pino package
   // https://www.tomray.dev/nestjs-logging
   app.useLogger(app.get(Logger));
-  
+
   // include stack trace in the error logs
   app.useGlobalInterceptors(new LoggerErrorInterceptor());
 

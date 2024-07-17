@@ -8,7 +8,7 @@ export default interface TasksRepository extends Repository<Task> {
   createTask(title: string, description: string, user: User): Promise<Task>;
 }
 
-export const taskRepository: Pick<TasksRepository, any> = {
+export const tasksRepository: Pick<TasksRepository, any> = {
   async getAllTasks(
     status: string,
     search: string,
