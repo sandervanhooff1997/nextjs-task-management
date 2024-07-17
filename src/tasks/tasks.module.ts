@@ -1,8 +1,9 @@
 import { Module } from '@nestjs/common';
+import { ConfigModule } from '@nestjs/config/dist';
 import {
   getDataSourceToken,
   getRepositoryToken,
-  TypeOrmModule,
+  TypeOrmModule
 } from '@nestjs/typeorm';
 import { AuthModule } from 'src/auth/auth.module';
 import { CommonModule } from 'src/common/common.module';
@@ -13,7 +14,12 @@ import { taskRepository } from './tasks.repository';
 import { TasksService } from './tasks.service';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Task]), CommonModule, AuthModule],
+  imports: [
+    TypeOrmModule.forFeature([Task]),
+    CommonModule,
+    AuthModule,
+    ConfigModule,
+  ],
   controllers: [TasksController],
   providers: [
     TasksService,
